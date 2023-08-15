@@ -229,6 +229,15 @@ func SetParamTargets(targets ...string) func(*Scanner) {
 
 // SetConfigPath set the scanner config-file path
 // eg: --conf /etc/masscan/masscan.conf
+func SetParamTargetsFile(targetsFile string) func(*Scanner) {
+	return func(s *Scanner) {
+		s.args = append(s.args, "-iL")
+		s.args = append(s.args, targetsFile)
+	}
+}
+
+// SetConfigPath set the scanner config-file path
+// eg: --conf /etc/masscan/masscan.conf
 func SetConfigPath(config string) func(*Scanner) {
 	return func(s *Scanner) {
 		s.args = append(s.args, "--conf")
@@ -283,8 +292,12 @@ func SetParamWait(delay int) func(*Scanner) {
 // SetParamPorts sets the ports which the scanner should scan on each host.
 // eg: -p 80,8000-8100
 func SetParamInterface(eth string) func(*Scanner) {
+	if eth != "" {
+		return func(s *Scanner) {
+			s.args = append(s.args, fmt.Sprintf("--interface=%s", eth))
+		}
+	}
 	return func(s *Scanner) {
-		s.args = append(s.args, fmt.Sprintf("--interface=%s", eth))
 	}
 }
 
