@@ -11,8 +11,8 @@ import (
 	"syscall"
 
 	osutil "github.com/projectdiscovery/utils/os"
-	"github.com/zan8in/masscan/errors"
-	"github.com/zan8in/masscan/tools"
+	"github.com/kontorol/go-masscan/errors"
+	"github.com/kontorol/go-masscan/tools"
 )
 
 type (

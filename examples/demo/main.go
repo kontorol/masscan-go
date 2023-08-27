@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/zan8in/masscan"
+	"github.com/kontorol/go-masscan"
 	"log"
 )
 
@@ -11,7 +11,7 @@ func main() {
 	scanner, err := masscan.NewScanner(
 		masscan.SetParamTargets("146.56.202.100/24"),
 		masscan.SetParamPorts("80"),
-		masscan.EnableDebug(),
+		masscan.EnableDebug(true),
 		masscan.SetParamWait(0),
 		masscan.SetParamRate(10000),
 	)

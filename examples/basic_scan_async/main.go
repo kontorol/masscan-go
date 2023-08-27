@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/zan8in/masscan"
+	"github.com/kontorol/go-masscan"
 )
 
 // BESTPORTS "21,22,80,U:137,U:161,443,445,U:1900,3306,3389,U:5353,8080"
@@ -30,7 +30,7 @@ func main() {
 	scanner, err := masscan.NewScanner(
 		masscan.SetParamTargets("60.10.116.10"),
 		masscan.SetParamPorts(BESTPORTS),
-		masscan.EnableDebug(),
+		masscan.EnableDebug(true),
 		masscan.SetParamWait(0),
 		// masscan.SetParamRate(1000),
 		masscan.WithContext(context),
