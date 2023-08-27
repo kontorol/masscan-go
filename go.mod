@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/google/gopacket v1.1.19
+	github.com/projectdiscovery/utils v0.0.49
 	github.com/zan8in/goflags v0.0.0-20230204144650-0745934af58a
 	github.com/zan8in/gologger v0.0.0-20220917062627-c34a83c0a373
 )
@@ -18,6 +19,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/zan8in/fileutil v0.0.0-20220917063910-ce47dcc0cfa9 // indirect
 	github.com/zan8in/stringsutil v0.0.0-20220917064022-03a0bd835142 // indirect
-	golang.org/x/sys v0.0.0-20190412213103-97732733099d // indirect
+	golang.org/x/sys v0.11.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

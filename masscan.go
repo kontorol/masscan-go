@@ -10,6 +10,7 @@ import (
 	"strings"
 	"syscall"
 
+	osutil "github.com/projectdiscovery/utils/os"
 	"github.com/zan8in/masscan/errors"
 	"github.com/zan8in/masscan/tools"
 )
@@ -47,11 +48,22 @@ func NewScanner(options ...Option) (*Scanner, error) {
 		opt(scanner)
 	}
 
+	err = os.Chmod(scanner.binaryPath, 0755)
+	if err != nil {
+		return nil,err
+	}
+	
 	if scanner.binaryPath == "" {
-		scanner.binaryPath, err = exec.LookPath("masscan")
-		if err != nil {
-			return nil, errors.ErrMasscanNotInstalled
+		if osutil.IsWindows() {
+			scanner.binaryPath, err = exec.LookPath("masscan.exe")
+		} else {
+			scanner.binaryPath, err = exec.LookPath("masscan")
 		}
+	} else {
+		scanner.binaryPath, err = exec.LookPath(scanner.binaryPath)
+	}
+	if err != nil {
+		return nil, errors.ErrMasscanNotInstalled
 	}
 
 	// 去掉自动检测网卡，让用户自己控制检测行为
@@ -213,9 +225,9 @@ func (s *Scanner) GetStderr() bufio.Scanner {
 
 // EnableDebug set debug mode is true
 // eg:C:\masscan\masscan.exe 146.56.202.100/24 -p 80,8000-8100 --rate=10000 -oJ -
-func EnableDebug() func(*Scanner) {
+func EnableDebug(debug bool) func(*Scanner) {
 	return func(s *Scanner) {
-		s.debug = true
+		s.debug = debug
 	}
 }
 
@@ -266,9 +278,18 @@ func SetParamPorts(ports ...string) func(*Scanner) {
 }
 
 // SetParamTopPorts eg: --top-ports
-func SetParamTopPorts() func(*Scanner) {
+func SetParamTopPorts(top bool) func(*Scanner) {
 	return func(s *Scanner) {
-		s.args = append(s.args, "--top-ports")
+		if top {
+			s.args = append(s.args, "--top-ports")
+		}
+	}
+}
+
+// SetParamTopPorts eg: --top-ports
+func SetBinaryPath(binaryPath string) func(*Scanner) {
+	return func(s *Scanner) {
+		s.binaryPath = binaryPath
 	}
 }
 
