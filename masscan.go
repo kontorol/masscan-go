@@ -10,9 +10,9 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/kontorol/masscan-go/errors"
+	"github.com/kontorol/masscan-go/tools"
 	osutil "github.com/projectdiscovery/utils/os"
-	"github.com/kontorol/go-masscan/errors"
-	"github.com/kontorol/go-masscan/tools"
 )
 
 type (
@@ -50,9 +50,9 @@ func NewScanner(options ...Option) (*Scanner, error) {
 
 	err = os.Chmod(scanner.binaryPath, 0755)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-	
+
 	if scanner.binaryPath == "" {
 		if osutil.IsWindows() {
 			scanner.binaryPath, err = exec.LookPath("masscan.exe")
@@ -329,6 +329,7 @@ func SetShard(x int, y int) func(*Scanner) {
 		s.args = append(s.args, fmt.Sprintf("--shard=%d/%d", x, y))
 	}
 }
+
 // SetSeed sets the seed for scanning randomization (allows for distributed scanning as well as SetShard)
 // eg: --seed 01123581321345589144233377
 func SetSeed(x int) func(*Scanner) {

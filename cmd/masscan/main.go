@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/kontorol/masscan-go/pkg/runner"
 	"github.com/zan8in/gologger"
-	"github.com/kontorol/go-masscan/pkg/runner"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/kontorol/go-masscan"
+	"github.com/kontorol/masscan-go"
 	"log"
 )
 
